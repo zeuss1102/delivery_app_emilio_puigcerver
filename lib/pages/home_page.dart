@@ -1,4 +1,5 @@
 import 'package:delivery_app_emilio_puigcerver/componets/my_drawer.dart';
+import 'package:delivery_app_emilio_puigcerver/componets/my_sliver_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,10 +13,15 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Inicio"),
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      ),
       drawer: MyDrawer(),
+      body: NestedScrollView(
+        headerSliverBuilder: (context, InnerBoxIsScrolled) => [
+          MySliverAppBar(
+            child: Text('hola'),
+            title: Text('titulo'),)
+        ],
+        body: Container(color: Colors.blue),
+        ),
     );
   }
 }
