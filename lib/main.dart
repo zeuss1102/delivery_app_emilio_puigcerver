@@ -1,3 +1,4 @@
+import 'package:delivery_app_emilio_puigcerver/auth/login_or_register.dart';
 import 'package:delivery_app_emilio_puigcerver/pages/login_page.dart';
 import 'package:delivery_app_emilio_puigcerver/themes/theme_provider.dart';
 import 'package:flutter/material.dart';
@@ -15,11 +16,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp( 
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:  LoginPage(
-        onTap:(){} ,
-      ),
+      home:const LoginOrRegister(),
       theme: Provider.of<ThemeProvider>(context).themeData,
     );
   }

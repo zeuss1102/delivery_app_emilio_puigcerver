@@ -1,6 +1,7 @@
 import 'package:delivery_app_emilio_puigcerver/componets/my_button.dart';
 import 'package:delivery_app_emilio_puigcerver/componets/my_textfield.dart';
 import 'package:flutter/material.dart';
+import 'home_page.dart';
 
 class LoginPage extends StatefulWidget {
   final void Function()? onTap;
@@ -14,8 +15,21 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   //control de edicion de texto
   final TextEditingController emailController = TextEditingController();
-
   final TextEditingController passwordController = TextEditingController();
+
+  // metodo para ingresar
+  void login () {
+    /*
+    parametros de autentificación para el ingreso 
+    */
+    //navegación hacia la página de inicio
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const HomePage(),
+        ),
+      );
+  }
 
 //esta es la parte de la página principal
   @override
@@ -63,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
 
           //sing in button este boton siver para ingresar a la página principal
           MyButton(text: "Ingresar",
-            onTap: (){},
+            onTap: login,
             ),
             const SizedBox(height: 25),
           // not a member? register now  en este apartado se anexaran los nuevos usuarios dentro de la app
