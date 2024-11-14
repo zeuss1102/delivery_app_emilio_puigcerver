@@ -12,12 +12,12 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  //control de edicion de texto 
+  //control de edicion de texto
   final TextEditingController emailController = TextEditingController();
 
   final TextEditingController passwordController = TextEditingController();
 
-//esta es la parte de la página principal 
+//esta es la parte de la página principal
   @override
   Widget build(BuildContext context) {
     return Scaffold(
