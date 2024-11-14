@@ -1,7 +1,22 @@
+import 'package:delivery_app_emilio_puigcerver/componets/my_button.dart';
+import 'package:delivery_app_emilio_puigcerver/componets/my_textfield.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage ({super.key});
+class LoginPage extends StatefulWidget {
+  final void Function()? onTap;
+
+  const LoginPage ({super.key, required this.onTap});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  //control de edicion de texto 
+  final TextEditingController emailController = TextEditingController();
+
+  final TextEditingController passwordController = TextEditingController();
+
 //esta es la parte de la página principal 
   @override
   Widget build(BuildContext context) {
@@ -30,14 +45,51 @@ class LoginPage extends StatelessWidget {
             const SizedBox(height: 25,),
 
           // email textfield
-          TextField(),
+          MyTextfield(
+            controller: emailController,
+            hintText: "Email",
+            obscureText: false,
+
+          ),
+          const SizedBox(height: 10),
 
           //password textfield
+          MyTextfield(
+            controller: passwordController,
+            hintText: "contraseña",
+            obscureText: true,
+            ),
+          const SizedBox(height: 10),
 
-          //sing in button
-          // not a member? register now  en este apartado se anexaran los nuevos usuarios dentro de la app 
+          //sing in button este boton siver para ingresar a la página principal
+          MyButton(text: "Ingresar",
+            onTap: (){},
+            ),
+            const SizedBox(height: 25),
+          // not a member? register now  en este apartado se anexaran los nuevos usuarios dentro de la app
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "¿Aun no eres miembro?",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.inversePrimary),
+                ),
+              const SizedBox(width: 4),
+              GestureDetector(
+                onTap: widget.onTap,
+                child: Text(
+                  "Registrate ahora!",
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.inversePrimary,
+                    fontWeight: FontWeight.bold,
+                    ),
+                  ),
+              ),
+            ],
+          )
           ],
-         ),
+        ),
       ),
     );
   }
