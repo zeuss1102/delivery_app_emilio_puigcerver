@@ -196,6 +196,9 @@ class Restaurant {
   /*
     OPERACIONES
   */
+  //añadir carrito
+
+  // quitar del carrito
 
   /*
   AYUDANTES
