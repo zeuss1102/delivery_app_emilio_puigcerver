@@ -20,7 +20,7 @@ class _LoginPageState extends State<LoginPage> {
   // metodo para ingresar
   void login () {
     /*
-    parametros de autentificación para el ingreso 
+    parametros de autentificación para el ingreso
     */
     //navegación hacia la página de inicio
     Navigator.push(

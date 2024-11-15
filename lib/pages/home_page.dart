@@ -60,15 +60,15 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               itemCount: 5, //sirve para contabilizar cuantas veces se va a mostrar un elemento
               itemBuilder: (context, index) => Text("tab1")
               ),
-               ListView.builder(
+              ListView.builder(
               itemCount: 5, //sirve para contabilizar cuantas veces se va a mostrar un elemento
               itemBuilder: (context, index) => Text("tab2")
               ),
-               ListView.builder(
+              ListView.builder(
               itemCount: 5, //sirve para contabilizar cuantas veces se va a mostrar un elemento
               itemBuilder: (context, index) => Text("tab3")
               ),
-          
+
           ],
           ),
         ),
