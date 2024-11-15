@@ -3,7 +3,11 @@ import 'package:delivery_app_emilio_puigcerver/componets/my_description_box.dart
 import 'package:delivery_app_emilio_puigcerver/componets/my_drawer.dart';
 import 'package:delivery_app_emilio_puigcerver/componets/my_sliver_app_bar.dart';
 import 'package:delivery_app_emilio_puigcerver/componets/my_tab_bar.dart';
+import 'package:delivery_app_emilio_puigcerver/models/food.dart';
+import 'package:delivery_app_emilio_puigcerver/models/restaurant.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -20,13 +24,35 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this); // este sirve para dividir y salgan los tab bar en este caso son 3 tres iconos home / settings // person 
+    _tabController = TabController(length: FoodCategory.values.length, vsync: this); // este sirve para dividir y salgan los tab bar en este caso son 3 tres iconos home / settings // person
 
   }
   @override
   void dispose() {
     _tabController.dispose();
     super.dispose();
+  }
+
+  //Ordenar y devolver una lista de alimentos que pertenecen a una categoría específica
+  List<Food> _filterMenuByCategory(FoodCategory category, List<Food> fullMenu){
+    return fullMenu.where((food) => food.category == category) .toList();
+  }
+  //Devolver la lista de alimentos en la categoría dada
+  List<Widget> getFoodInThisCategory(List<Food> fullMenu) {
+    return FoodCategory.values.map((category) {
+      List<Food> categoryMenu = _filterMenuByCategory(category, fullMenu);
+
+      return ListView.builder(
+        itemCount: categoryMenu.length,
+        physics:const NeverScrollableScrollPhysics(),
+        padding: EdgeInsets.zero, //hace que no tenga un espacio en la parte de arriba
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text (categoryMenu[index].name),
+          );
+        },
+      );
+    }).toList();
   }
 
   @override
@@ -53,24 +79,12 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               ],
             ),)
         ],
-        body: TabBarView(
+        body: Consumer<Restaurant>(
+          builder: (context, restaurant, child) => TabBarView(
           controller: _tabController,
-          children: [
-            ListView.builder(
-              itemCount: 5, //sirve para contabilizar cuantas veces se va a mostrar un elemento
-              itemBuilder: (context, index) => Text("tab1")
-              ),
-              ListView.builder(
-              itemCount: 5, //sirve para contabilizar cuantas veces se va a mostrar un elemento
-              itemBuilder: (context, index) => Text("tab2")
-              ),
-              ListView.builder(
-              itemCount: 5, //sirve para contabilizar cuantas veces se va a mostrar un elemento
-              itemBuilder: (context, index) => Text("tab3")
-              ),
-
-          ],
-          ),
+          children: getFoodInThisCategory(restaurant.menu),
+        ),
+        ),
         ),
     );
   }

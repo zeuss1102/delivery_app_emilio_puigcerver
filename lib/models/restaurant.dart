@@ -1,6 +1,7 @@
 import 'package:delivery_app_emilio_puigcerver/models/food.dart';
+import 'package:flutter/material.dart';
 
-class Restaurant {
+class Restaurant extends ChangeNotifier{
   //lista del menú de comida
   final List<Food> _menu = [
     //burgers
@@ -200,9 +201,21 @@ class Restaurant {
 
   // quitar del carrito
 
+  //obtener el total del carrito
+
+  //obtener el numero total de articulos en el carrito
+
+  //vaciar carrito
+
   /*
   AYUDANTES
   */
+
+  //generar recibo
+
+  //formato de pago
+
+  //format list of addons into a string summary
 
 
 }
