@@ -37,42 +37,62 @@ class _FoodPageState extends State<FoodPage> {
             ),
           ),
           //precio comida
-            Text(widget.food.price.toString(),
-             style: TextStyle(
+          Text(  '\$${widget.food.price}',
+              style: TextStyle(
               fontSize: 16,
               color: Theme.of(context).colorScheme.primary),
             ),
             const SizedBox(height: 10),
 
             //descripción de comida
-            Text(widget.food.description,
-             style: TextStyle(
-              fontSize: 16,
-              color: Theme.of(context).colorScheme.primary),
-            ),
+            Text(widget.food.description),
+
+            const SizedBox(height: 10),
+            Divider(color: Theme.of(context).colorScheme.secondary),
+            const SizedBox(height: 10),
+
 
             // complementos (addons)
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: widget.food.availableAddons.length,
-              itemBuilder: (context,index) {
-                //obtener complementos individuales
-              Addon addon = widget.food.availableAddons[index];
-              // volver a la caja de lista
-              return CheckboxListTile(
-                title: Text(addon.name),
-                subtitle:Text(addon.price.toString()) ,
-                value: false,
-                onChanged: (value){}
-              );
-            },
-                    )
+            Text(
+              "Añadir complementos",
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.inversePrimary,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Container(
+              decoration: BoxDecoration(border: Border.all(color: Theme.of(context).colorScheme.secondary),
+              borderRadius: BorderRadius.circular(9),
+              ),
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.zero,
+                itemCount: widget.food.availableAddons.length,
+                itemBuilder: (context,index) {
+                  //obtener complementos individuales
+                Addon addon = widget.food.availableAddons[index];
+                // volver a la caja de lista UI
+                return CheckboxListTile(
+                  title: Text(addon.name),
+                  subtitle:Text(  '\$${addon.price}',
+                  style: TextStyle(color: Theme.of(context).colorScheme.primary,
+                ),
+              ) ,
+                  value: false, // este valor sirve para seleccionar los complementos 
+                  onChanged: (value){}
+                );
+              },
+                      ),
+            )
                   ],
                 ),
           ),
 
           //button -> añadir al carrito
+          
         ],
       ),
     );
