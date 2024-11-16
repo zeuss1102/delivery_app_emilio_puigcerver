@@ -1,11 +1,11 @@
 import 'package:delivery_app_emilio_puigcerver/componets/my_current_location.dart';
 import 'package:delivery_app_emilio_puigcerver/componets/my_description_box.dart';
 import 'package:delivery_app_emilio_puigcerver/componets/my_drawer.dart';
+import 'package:delivery_app_emilio_puigcerver/componets/my_food_tile.dart';
 import 'package:delivery_app_emilio_puigcerver/componets/my_sliver_app_bar.dart';
 import 'package:delivery_app_emilio_puigcerver/componets/my_tab_bar.dart';
 import 'package:delivery_app_emilio_puigcerver/models/food.dart';
 import 'package:delivery_app_emilio_puigcerver/models/restaurant.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -40,6 +40,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   //Devolver la lista de alimentos en la categoría dada
   List<Widget> getFoodInThisCategory(List<Food> fullMenu) {
     return FoodCategory.values.map((category) {
+
+      //obtener categoria del menú
       List<Food> categoryMenu = _filterMenuByCategory(category, fullMenu);
 
       return ListView.builder(
@@ -47,8 +49,12 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         physics:const NeverScrollableScrollPhysics(),
         padding: EdgeInsets.zero, //hace que no tenga un espacio en la parte de arriba
         itemBuilder: (context, index) {
-          return ListTile(
-            title: Text (categoryMenu[index].name),
+          //comida individual
+          final food =categoryMenu[index];
+
+          //devolver ficha de comida UI
+          return FoodTile(food: food,
+          onTap: (){}
           );
         },
       );
