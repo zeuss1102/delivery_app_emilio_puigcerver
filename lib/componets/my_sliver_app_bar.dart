@@ -1,3 +1,4 @@
+import 'package:delivery_app_emilio_puigcerver/pages/cart_page.dart';
 import 'package:flutter/material.dart';
 
 class MySliverAppBar extends StatelessWidget {
@@ -18,8 +19,13 @@ class MySliverAppBar extends StatelessWidget {
       pinned: true, // sirve para que no se vaya para arriba el apartado del footer de la app
       actions: [
         //botón del carrito de compras
-        IconButton(onPressed: (){},
-        icon: const Icon(Icons.shopping_cart),
+        IconButton(onPressed: (){
+          // ir al carrito de compras (cart page)
+          Navigator.push(context, MaterialPageRoute(builder: (context)=> const CartPage()
+          ),
+          );
+        },
+        icon: const Icon(Icons.shopping_cart_outlined),
         )
       ],
       backgroundColor: Theme.of(context).colorScheme.surface,
