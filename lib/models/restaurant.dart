@@ -1,3 +1,5 @@
+import 'package:collection/collection.dart';
+import 'package:delivery_app_emilio_puigcerver/models/cart_item.dart';
 import 'package:delivery_app_emilio_puigcerver/models/food.dart';
 import 'package:flutter/material.dart';
 
@@ -197,15 +199,84 @@ class Restaurant extends ChangeNotifier{
   /*
     OPERACIONES
   */
+  //usuario del carrito
+  final List<CartItem> _cart = [];
   //añadir carrito
+  void addToCart (Food food, List<Addon> selectedAddons) {
+    CartItem? cartItem = _cart.firstWhereOrNull((item) {
+      // checar si los iconos de los articulos (item) son iguales
+      bool isSameFood = item.food == food;
+
+
+      // checar si la lista de complementos son iguales
+      bool isSameAddons =
+        ListEquality().equals(item.selectedAddons, selectedAddons);
+
+      return isSameFood && isSameAddons;
+    });
+    //si el articulo está listo
+    if (cartItem !=null) {
+      cartItem.quantity++;
+    }
+    // añadir de  otra manera articulos al carrito
+    else {
+      _cart.add(
+        CartItem(
+          food: food, 
+          selectedAddons: selectedAddons
+        ),
+      );
+    }
+    notifyListeners();
+  }
 
   // quitar del carrito
+  void removeFromCart(CartItem cartItem) {
+    int cartIndex =  _cart.indexOf(cartItem);
+
+    if(cartIndex != -1) {
+      if (_cart[cartIndex].quantity > 1) {
+        _cart[cartIndex].quantity--;
+      } else {
+        _cart.removeAt(cartIndex);
+      }
+    }
+    notifyListeners();
+  }
 
   //obtener el total del carrito
+  double getTotalPrice () {
+    double total = 0.0;
+
+    for (CartItem cartItem in _cart) {
+      double itemTotal = cartItem.food.price;
+
+      for (Addon addon in cartItem.selectedAddons) {
+        itemTotal += addon.price;
+      }
+
+      total += itemTotal * cartItem.quantity;
+    }
+
+    return total;
+  }
 
   //obtener el numero total de articulos en el carrito
+  int getTotalItemCount () {
+    int getTotalItemCount = 0;
+
+    for(CartItem cartItem in _cart) {
+      getTotalItemCount += cartItem.quantity;
+    }
+
+    return getTotalItemCount;
+  }
 
   //vaciar carrito
+  void clearCart() {
+    _cart.clear();
+    notifyListeners();
+  }
 
   /*
   AYUDANTES
