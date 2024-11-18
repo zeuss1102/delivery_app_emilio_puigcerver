@@ -1,6 +1,7 @@
 import 'package:delivery_app_emilio_puigcerver/componets/my_button.dart';
 import 'package:delivery_app_emilio_puigcerver/componets/my_cart_tile.dart';
 import 'package:delivery_app_emilio_puigcerver/models/restaurant.dart';
+import 'package:delivery_app_emilio_puigcerver/pages/payment_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -60,7 +61,7 @@ class CartPage extends StatelessWidget {
                       itemBuilder: (context, index){
                         //obtener el item individual del carrito
                         final cartItem = userCart[index];
-              
+
                         //volver al cart tile UI
                         return MyCartTile(cartItem: cartItem);
                       },
@@ -70,7 +71,12 @@ class CartPage extends StatelessWidget {
               ),
             ),
             //boton para pagar
-            MyButton(text: "Ir a la caja", onTap: (){}),
+            MyButton(onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context)=> const PaymentPage())
+              ),
+            text: "Ir a la caja"),
             const SizedBox(height: 25),
           ],
         ),
