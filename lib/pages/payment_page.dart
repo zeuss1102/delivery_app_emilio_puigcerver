@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'delivery_progress_page.dart';
 
+
 class PaymentPage extends StatefulWidget {
   const PaymentPage({super.key});
 
@@ -77,6 +78,7 @@ class _PaymentPageState extends State<PaymentPage> {
             onCreditCardWidgetChange: (p0) {},
           ),
           CreditCardForm(
+            themeColor: Colors.blue, // Añadido: Color del tema del formulario
             formKey: formKey,
             cardNumber: cardNumber,
             expiryDate: expiryDate,
@@ -103,3 +105,4 @@ class _PaymentPageState extends State<PaymentPage> {
     );
   }
 }
+
