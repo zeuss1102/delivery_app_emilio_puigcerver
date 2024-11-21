@@ -211,7 +211,7 @@ class Restaurant extends ChangeNotifier{
 
       // checar si la lista de complementos son iguales
       bool isSameAddons =
-        ListEquality().equals(item.selectedAddons, selectedAddons);
+        const ListEquality().equals(item.selectedAddons, selectedAddons);
 
       return isSameFood && isSameAddons;
     });

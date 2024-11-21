@@ -8,7 +8,7 @@ class MyCurrentLocation extends StatelessWidget {
     builder: (context)=> AlertDialog(
       title: const Text("Tu ubicación"),
       content:const TextField(
-        decoration: const InputDecoration(hintText: "Buscar dirección..."),// crea una ventana foltante donde se puede checar la ubicación
+        decoration: InputDecoration(hintText: "Buscar dirección..."),// crea una ventana foltante donde se puede checar la ubicación
       ),
       actions: [
         //botón de cancelación
@@ -51,7 +51,7 @@ class MyCurrentLocation extends StatelessWidget {
               ),
                   
                //despliegue del menú
-              Icon(Icons.keyboard_arrow_down_rounded),
+              const Icon(Icons.keyboard_arrow_down_rounded),
               ],
             ),
           ),

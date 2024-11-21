@@ -28,7 +28,7 @@ class MyCartTile extends StatelessWidget {
                 //imagen de la comida
               ClipRRect(
               borderRadius: BorderRadius.circular(9),
-              child: Container(
+              child: SizedBox(
                 width: 200,
                 height: 125,
                 child: Image.asset(
@@ -46,7 +46,7 @@ class MyCartTile extends StatelessWidget {
                   Text(cartItem.food.name),
             
                   //precio de la comida
-                  Text('\$' + cartItem.food.price.toString(),
+                  Text('\$${cartItem.food.price}',
                   style: TextStyle(color: Theme.of(context).colorScheme.primary),
                   ),
                 ],

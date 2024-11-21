@@ -10,7 +10,7 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("herramientas"),
+        title: const Text("herramientas"),
         backgroundColor: Theme.of(context).colorScheme.surface,
       ),
       //estaes la estructura del boton de dark mode

@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.delivery_app_emilio_puigcerver"
+    namespace = "com.example.delivery_app_emilio_puigcerver" // El namespace de tu app
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -20,10 +20,8 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.delivery_app_emilio_puigcerver"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://flutter.dev/to/review-gradle-config.
+        // Especifica tu propio Application ID (el id único de tu app).
+        applicationId = "com.example.delivery_app_emilio_puigcerver"  // Asegúrate de que esto sea único y coincida con el namespace
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
@@ -32,13 +30,12 @@ android {
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
+            // Configuración de firma para la release. Usa un signing config aquí si lo tienes.
             signingConfig = signingConfigs.debug
         }
     }
 }
 
 flutter {
-    source = "../.."
+    source = "../.." // Ruta de los archivos fuente de Flutter
 }

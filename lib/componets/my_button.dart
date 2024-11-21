@@ -17,7 +17,7 @@ class MyButton extends StatelessWidget{
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(25),
-        margin: EdgeInsets.symmetric(horizontal: 50),
+        margin: const EdgeInsets.symmetric(horizontal: 50),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.secondary,
           //esta línea sirve para los bordes del botón de ingresar
