@@ -286,8 +286,14 @@ class Restaurant extends ChangeNotifier{
   //generar recibo
 
   //formato de pago
+  String _formatPrice(double price) {
+    return "\$" + price.toStringAsFixed(2);
+  }
 
   //format list of addons into a string summary
+  String _formatAddons(List<Addon> addons){
+    return addons.map((addon) => "${addon.name}").join();
+  }
 
 
 }
