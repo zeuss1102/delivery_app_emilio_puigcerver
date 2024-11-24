@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:delivery_app_emilio_puigcerver/models/cart_item.dart';
 import 'package:delivery_app_emilio_puigcerver/models/food.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Restaurant extends ChangeNotifier{
   //lista del menú de comida
@@ -284,15 +285,50 @@ class Restaurant extends ChangeNotifier{
   */
 
   //generar recibo
+  String displayCartReceipt() {
+    final receipt = StringBuffer();
+    receipt.writeln("Aquí está tu recibo.");
+    receipt.writeln();
+    //formato de fecha incluido los segundos
+    String formattedDate =
+      DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
+
+    receipt.writeln(formattedDate);
+    receipt.writeln();
+    receipt.writeln("----------");
+
+   for (final cartItem in _cart) {
+  receipt.writeln(
+    "${cartItem.quantity} x ${cartItem.food.name} - ${_formatPrice(cartItem.food.price)}"
+  );
+  if (cartItem.selectedAddons.isNotEmpty) {
+    receipt.writeln(
+      " complementos: ${_formatAddons(cartItem.selectedAddons)}"
+    );
+  }
+  
+  receipt.writeln(); // Añade una línea vacía entre los elementos
+}
+
+
+    receipt.writeln("----------");
+      receipt.writeln("");
+      receipt.writeln("Articulos totales: ${getTotalItemCount()}");
+      receipt.writeln("Precio total: ${_formatPrice(getTotalPrice())}");
+      
+      return receipt.toString();
+  }
 
   //formato de pago
   String _formatPrice(double price) {
-    return "\$" + price.toStringAsFixed(2);
+    return "\$${price.toStringAsFixed(2)}";
   }
 
   //format list of addons into a string summary
   String _formatAddons(List<Addon> addons){
-    return addons.map((addon) => "${addon.name}").join();
+    return addons
+    .map((addon) => "${addon.name}(${_formatPrice(addon.price)})")
+    .join(", ");
   }
 
 

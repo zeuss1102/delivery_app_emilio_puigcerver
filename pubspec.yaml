@@ -16,6 +16,7 @@ dependencies:
   provider: ^6.1.2        # Versión compatible con tu configuración
   collection: ^1.17.1     # Compatible con Dart 3
   flutter_credit_card: ^3.0.2 # Última versión compatible con null safety
+  intl: ^0.20.0
 
 dev_dependencies:
   flutter_test:
