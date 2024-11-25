@@ -7,8 +7,9 @@ class FirestoreService {
   //guardar la orden en la base de datos
   Future<void> saveOrderToDatabase(String receipt) async{
     await orders.add({
-      'date'
+      'Fecha' : DateTime.now(),
+      'Orden' : receipt,
+      //añadir más carpetas si es necesario 
     });
   }
-
 }

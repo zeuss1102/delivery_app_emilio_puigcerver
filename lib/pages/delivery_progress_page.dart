@@ -1,13 +1,32 @@
 import 'package:delivery_app_emilio_puigcerver/componets/my_receipt.dart';
+import 'package:delivery_app_emilio_puigcerver/models/restaurant.dart';
+import 'package:delivery_app_emilio_puigcerver/services/database/firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class DeliveryProgressPage extends StatelessWidget {
+class DeliveryProgressPage extends StatefulWidget {
   const DeliveryProgressPage({super.key});
+
+  @override
+  State<DeliveryProgressPage> createState() => _DeliveryProgressPageState();
+}
+
+class _DeliveryProgressPageState extends State<DeliveryProgressPage> {
+
+  //obtener acceso a la base de datos
+  FirestoreService db =FirestoreService();
+  @override
+  void initState() {
+    super.initState();
+
+    //cuando este llena esta pagina envia la orden a la base de datos de firestore
+    String receipt = context.read<Restaurant>().displayCartReceipt();
+    db.saveOrderToDatabase(receipt);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(appBar: AppBar(
-      title:const Text("Entrega en curso..."),
       backgroundColor: Colors.transparent,
       ),
       bottomNavigationBar: _buildBottonNavBar(context),

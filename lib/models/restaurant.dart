@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 class Restaurant extends ChangeNotifier{
   //lista del menú de comida
   final List<Food> _menu = [
+
     //burgers
 //hamburguesa con tocino
     Food(name: "Bacon Burger",
@@ -192,17 +193,23 @@ class Restaurant extends ChangeNotifier{
       ]
       ),
   ];
+   
+    //usuario del carrito
+  final List<CartItem> _cart = [];
+
+  //delivery address
+  String _deliveryAddress = 'avenida frankie 99';
   /*
   CAPTADORES (GETTERS)
   */
   List<Food> get menu => _menu;
   List<CartItem> get cart => _cart;
+  String get deliveryAddress => _deliveryAddress;
 
   /*
     OPERACIONES
   */
-  //usuario del carrito
-  final List<CartItem> _cart = [];
+
   //añadir carrito
   void addToCart (Food food, List<Addon> selectedAddons) {
     CartItem? cartItem = _cart.firstWhereOrNull((item) {
@@ -279,7 +286,11 @@ class Restaurant extends ChangeNotifier{
     _cart.clear();
     notifyListeners();
   }
-
+  //modificar la dirección de envio
+  void updateDeliveryAddress(String newAddress){
+    _deliveryAddress = newAddress;
+    notifyListeners();
+  }
   /*
   AYUDANTES
   */
