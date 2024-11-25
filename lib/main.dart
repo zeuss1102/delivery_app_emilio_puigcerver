@@ -1,4 +1,4 @@
-import 'package:delivery_app_emilio_puigcerver/auth/login_or_register.dart';
+import 'package:delivery_app_emilio_puigcerver/services/auth/login_or_register.dart';
 import 'package:delivery_app_emilio_puigcerver/firebase_options.dart';
 import 'package:delivery_app_emilio_puigcerver/models/restaurant.dart';
 import 'package:delivery_app_emilio_puigcerver/themes/theme_provider.dart';
