@@ -1,5 +1,6 @@
-package com.example.delivery_app_emilio_puigcerver
+package com.fooddelivery.app
 
 import io.flutter.embedding.android.FlutterActivity
 
-class MainActivity: FlutterActivity()
+class MainActivity: FlutterActivity() {
+}

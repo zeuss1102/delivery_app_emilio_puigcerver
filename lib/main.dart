@@ -1,10 +1,16 @@
 import 'package:delivery_app_emilio_puigcerver/auth/login_or_register.dart';
+import 'package:delivery_app_emilio_puigcerver/firebase_options.dart';
 import 'package:delivery_app_emilio_puigcerver/models/restaurant.dart';
 import 'package:delivery_app_emilio_puigcerver/themes/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+
   runApp(
     //tema de provider
     MultiProvider(providers:[

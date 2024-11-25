@@ -1,12 +1,12 @@
 plugins {
     id "com.android.application"
+    id 'com.google.gms.google-services'
     id "kotlin-android"
-    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id "dev.flutter.flutter-gradle-plugin"
 }
 
 android {
-    namespace = "com.example.delivery_app_emilio_puigcerver" // El namespace de tu app
+    namespace = "com.fooddelivery.app" // El namespace de tu app
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -21,8 +21,8 @@ android {
 
     defaultConfig {
         // Especifica tu propio Application ID (el id único de tu app).
-        applicationId = "com.example.delivery_app_emilio_puigcerver"  // Asegúrate de que esto sea único y coincida con el namespace
-        minSdk = flutter.minSdkVersion
+        applicationId = "com.fooddelivery.app"  // Asegúrate de que esto sea único y coincida con el namespace
+        minSdkVersion 23  // Actualiza la versión mínima de SDK a 23
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
@@ -30,8 +30,10 @@ android {
 
     buildTypes {
         release {
-            // Configuración de firma para la release. Usa un signing config aquí si lo tienes.
-            signingConfig = signingConfigs.debug
+            // Configuración de ProGuard para minimizar y ofuscar el código
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
@@ -39,3 +41,7 @@ android {
 flutter {
     source = "../.." // Ruta de los archivos fuente de Flutter
 }
+
+
+
+
