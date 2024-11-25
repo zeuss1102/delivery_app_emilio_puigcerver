@@ -1,28 +1,30 @@
-import 'package:delivery_app_emilio_puigcerver/services/auth/login_or_register.dart';
 import 'package:delivery_app_emilio_puigcerver/firebase_options.dart';
 import 'package:delivery_app_emilio_puigcerver/models/restaurant.dart';
+import 'package:delivery_app_emilio_puigcerver/services/auth_gate.dart';
 import 'package:delivery_app_emilio_puigcerver/themes/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:delivery_app_emilio_puigcerver/pages/login_page.dart'; // Importar LoginPage
+import 'package:delivery_app_emilio_puigcerver/pages/home_page.dart'; // Importar HomePage
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-
   runApp(
     //tema de provider
-    MultiProvider(providers:[
+    MultiProvider(providers: [
       //tema provider
-      ChangeNotifierProvider(create: (context)=> ThemeProvider(),),
+      ChangeNotifierProvider(create: (context) => ThemeProvider(),),
       //restaurante provider
-      ChangeNotifierProvider(create: (context)=> Restaurant(),), //manda la infomacion para que se muestre en la pagina (separa los apartados)
-      ],
-      child: const MyApp(),
+      ChangeNotifierProvider(create: (context) => Restaurant(),), //manda la información para que se muestre en la página (separa los apartados)
+    ],
+    child: const MyApp(),
     ),
   );
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -30,11 +32,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:const LoginOrRegister(),
+      home: const AuthGate(),
       theme: Provider.of<ThemeProvider>(context).themeData,
+      routes: {
+        '/login': (context) => const LoginPage(onTap: null), // Define la ruta para LoginPage
+        '/home': (context) => const HomePage(), // Define la ruta para HomePage
+      },
     );
   }
 }
+
 
 
 

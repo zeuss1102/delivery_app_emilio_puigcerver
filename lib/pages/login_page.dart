@@ -1,7 +1,8 @@
 import 'package:delivery_app_emilio_puigcerver/componets/my_button.dart';
 import 'package:delivery_app_emilio_puigcerver/componets/my_textfield.dart';
+import 'package:delivery_app_emilio_puigcerver/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
-import 'home_page.dart';
+
 
 class LoginPage extends StatefulWidget {
   final void Function()? onTap;
@@ -18,17 +19,24 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController passwordController = TextEditingController();
 
   // metodo para ingresar
-  void login () {
-    /*
-    parametros de autentificación para el ingreso
-    */
-    //navegación hacia la página de inicio
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const HomePage(),
+  void login() async {
+    //get instance of auth service
+    final _authService = AuthService();
+
+    //intentar ingresar
+    try {
+      await _authService.signInWithEmailPassword(emailController.text, passwordController.text,);
+    }
+
+    //pantalla con algo de errores
+    catch (e) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(e.toString()),
         ),
       );
+    }
   }
 
 //esta es la parte de la página principal

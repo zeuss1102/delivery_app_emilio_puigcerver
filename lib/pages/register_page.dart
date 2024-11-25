@@ -1,5 +1,6 @@
 import 'package:delivery_app_emilio_puigcerver/componets/my_button.dart';
 import 'package:delivery_app_emilio_puigcerver/componets/my_textfield.dart';
+import 'package:delivery_app_emilio_puigcerver/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -8,102 +9,127 @@ class RegisterPage extends StatefulWidget {
   const RegisterPage({
     super.key,
     required this.onTap,
-    });
+  });
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-   //control de edicion de texto
+  //control de edicion de texto
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController = TextEditingController();
 
-//esta es la parte de la página principal
+  //metodo de registro
+  void register() async {
+    //get auth service
+    final _authService = AuthService();
+
+    //checar que las contraseñas coincidan
+    if (passwordController.text == confirmPasswordController.text) {
+      // intenta creando el usuario
+      try {
+        await _authService.signUpWithEmailPassword(emailController.text, passwordController.text);
+      } catch (e) {
+        //pantalla que muestra los errores
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text(e.toString()),
+          ),
+        );
+      }
+    } else {
+      //si las contraseñas no coincide marcar error
+      showDialog(
+        context: context,
+        builder: (context) => const AlertDialog(
+          title: Text("Las contraseñas no coinciden"),
+        ),
+      );
+    }
+  }
+
+  //esta es la parte de la página principal
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Center(
-        child:Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          //logo
-          Icon(
-            Icons.lock_open_rounded,
-            size: 100,
-            color:Theme.of(context).colorScheme.inversePrimary,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            //logo
+            Icon(
+              Icons.lock_open_rounded,
+              size: 100,
+              color: Theme.of(context).colorScheme.inversePrimary,
             ),
-
             const SizedBox(height: 25),
-          // texto donde se ve la creacion de una nueva cuenta 
-          Text(
-            "Generar una cuenta para ti <3",
-            style: TextStyle(
-              fontSize: 18,
-              color:Theme.of(context).colorScheme.inversePrimary,
-            ),
+            // texto donde se ve la creación de una nueva cuenta 
+            Text(
+              "Generar una cuenta para ti <3",
+              style: TextStyle(
+                fontSize: 18,
+                color: Theme.of(context).colorScheme.inversePrimary,
+              ),
             ),
             const SizedBox(height: 25,),
-
-          // email textfield
-          MyTextfield(
-            controller: emailController,
-            hintText: "Email",
-            obscureText: false,
-
-          ),
-          const SizedBox(height: 10),
-
-          //password textfield
-          MyTextfield(
-            controller: passwordController,
-            hintText: "contraseña",
-            obscureText: true,
+            // email textfield
+            MyTextfield(
+              controller: emailController,
+              hintText: "Email",
+              obscureText: false,
             ),
-              const SizedBox(height: 10),
-
-          //confirmar de nuevo la contraseña password textfield
-          MyTextfield(
-            controller: confirmPasswordController,
-            hintText: "confirmar contraseña",
-            obscureText: true,
+            const SizedBox(height: 10),
+            //password textfield
+            MyTextfield(
+              controller: passwordController,
+              hintText: "contraseña",
+              obscureText: true,
             ),
-
-          const SizedBox(height: 10),
-
-          //sing up button es para registrarte como nuevo usuario
-          MyButton(
-            text: "Unirte",
-            onTap: (){},
+            const SizedBox(height: 10),
+            //confirmar de nuevo la contraseña password textfield
+            MyTextfield(
+              controller: confirmPasswordController,
+              hintText: "confirmar contraseña",
+              obscureText: true,
+            ),
+            const SizedBox(height: 10),
+            //sign up button es para registrarte como nuevo usuario
+            MyButton(
+              text: "Unirte",
+              onTap: register,
             ),
             const SizedBox(height: 25),
-          // aparatado de donde si ya tienes una cuenta poder ingresar a la pagina principal
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "¿Tienes una cuenta?",
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.inversePrimary),
-                ),
-              const SizedBox(width: 4),
-              GestureDetector(
-                onTap: widget.onTap,
-                child: Text(
-                  "Ingresa ahora!",
+            // aparatado de donde si ya tienes una cuenta poder ingresar a la página principal
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "¿Tienes una cuenta?",
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.inversePrimary,
-                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(width: 4),
+                GestureDetector(
+                  onTap: widget.onTap,
+                  child: Text(
+                    "¡Ingresa ahora!",
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.inversePrimary,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-              ),
-            ],
-          )
+                ),
+              ],
+            )
           ],
         ),
       ),
     );
   }
 }
+
