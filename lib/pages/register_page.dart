@@ -2,6 +2,7 @@ import 'package:delivery_app_emilio_puigcerver/componets/my_button.dart';
 import 'package:delivery_app_emilio_puigcerver/componets/my_textfield.dart';
 import 'package:delivery_app_emilio_puigcerver/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'login_page.dart';
 
 class RegisterPage extends StatefulWidget {
   final void Function()? onTap;
@@ -16,23 +17,23 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  //control de edicion de texto
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController = TextEditingController();
 
   //metodo de registro
   void register() async {
-    //get auth service
+    // Obtener el servicio de autenticación
     final _authService = AuthService();
 
-    //checar que las contraseñas coincidan
+    // Verificar que las contraseñas coincidan
     if (passwordController.text == confirmPasswordController.text) {
-      // intenta creando el usuario
       try {
+        // Intentar crear el usuario
         await _authService.signUpWithEmailPassword(emailController.text, passwordController.text);
+        Navigator.pushReplacementNamed(context, '/home');
       } catch (e) {
-        //pantalla que muestra los errores
+        // Pantalla que muestra los errores
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -41,7 +42,7 @@ class _RegisterPageState extends State<RegisterPage> {
         );
       }
     } else {
-      //si las contraseñas no coincide marcar error
+      // Si las contraseñas no coinciden, mostrar error
       showDialog(
         context: context,
         builder: (context) => const AlertDialog(
@@ -115,7 +116,12 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 const SizedBox(width: 4),
                 GestureDetector(
-                  onTap: widget.onTap,
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginPage(onTap: widget.onTap)),
+                    );
+                  },
                   child: Text(
                     "¡Ingresa ahora!",
                     style: TextStyle(

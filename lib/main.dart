@@ -5,20 +5,18 @@ import 'package:delivery_app_emilio_puigcerver/themes/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:delivery_app_emilio_puigcerver/pages/login_page.dart'; // Importar LoginPage
-import 'package:delivery_app_emilio_puigcerver/pages/home_page.dart'; // Importar HomePage
+import 'package:delivery_app_emilio_puigcerver/pages/login_page.dart';
+import 'package:delivery_app_emilio_puigcerver/pages/register_page.dart';
+import 'package:delivery_app_emilio_puigcerver/pages/home_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(
-    //tema de provider
     MultiProvider(providers: [
-      //tema provider
       ChangeNotifierProvider(create: (context) => ThemeProvider(),),
-      //restaurante provider
-      ChangeNotifierProvider(create: (context) => Restaurant(),), //manda la información para que se muestre en la página (separa los apartados)
+      ChangeNotifierProvider(create: (context) => Restaurant(),), // Manda la información para que se muestre en la página (separa los apartados)
     ],
     child: const MyApp(),
     ),
@@ -36,11 +34,13 @@ class MyApp extends StatelessWidget {
       theme: Provider.of<ThemeProvider>(context).themeData,
       routes: {
         '/login': (context) => const LoginPage(onTap: null), // Define la ruta para LoginPage
+        '/register': (context) => const RegisterPage(onTap: null), // Define la ruta para RegisterPage
         '/home': (context) => const HomePage(), // Define la ruta para HomePage
       },
     );
   }
 }
+
 
 
 
