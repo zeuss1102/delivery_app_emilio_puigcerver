@@ -1,30 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:delivery_app_emilio_puigcerver/models/restaurant.dart';
 
-class MyCurrentLocation extends StatelessWidget {
+
+class MyCurrentLocation extends StatefulWidget {
   const MyCurrentLocation({super.key});
 
-  void openLocationSearchBox(BuildContext context){
-    showDialog(context: context, 
-    builder: (context)=> AlertDialog(
-      title: const Text("Tu ubicación"),
-      content:const TextField(
-        decoration: InputDecoration(hintText: "Buscar dirección..."),// crea una ventana foltante donde se puede checar la ubicación
-      ),
-      actions: [
-        //botón de cancelación
-        MaterialButton(
-          onPressed: () => Navigator.pop(context),
-          child: const Text("Cancelar"),
-          ),
+  @override
+  _MyCurrentLocationState createState() => _MyCurrentLocationState();
+}
 
-        //botón de guardado
-        MaterialButton(
-          onPressed: () => Navigator.pop(context),
-          child: const Text("Guardar"),
+class _MyCurrentLocationState extends State<MyCurrentLocation> {
+  final TextEditingController textController = TextEditingController();
+
+  void openLocationSearchBox(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Tu ubicación"),
+        content: TextField(
+          controller: textController,
+          decoration: const InputDecoration(hintText: "Buscar dirección..."),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              textController.clear(); // Limpiar el controlador antes de cerrar el diálogo
+              Navigator.pop(context);
+            },
+            child: const Text("Cancelar"),
           ),
-      ],
-    ),
+          TextButton(
+            onPressed: () {
+              // Modificar la dirección de envío
+              String newAddress = textController.text;
+              context.read<Restaurant>().updateDeliveryAddress(newAddress);
+              textController.clear(); // Limpiar el controlador después de actualizar la dirección
+              Navigator.pop(context);
+            },
+            child: const Text("Guardar"),
+          ),
+        ],
+      ),
     );
+  }
+
+  @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
   }
 
   @override
@@ -34,24 +58,28 @@ class MyCurrentLocation extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Pedir ahora", style: TextStyle
-          (color: Theme.of(context).colorScheme.primary
-      
-          ),
+          Text(
+            "Pedir ahora",
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.primary,
+            ),
           ),
           GestureDetector(
-            onTap:() => openLocationSearchBox(context),
+            onTap: () => openLocationSearchBox(context),
             child: Row(
-            children: [
-               //en este apartado del código se verá  la parte de la dirección del ususario
-              Text("97000 Mérida Yucatán Centro" ,style: TextStyle
-              (color: Theme.of(context).colorScheme.inversePrimary,
-              fontWeight: FontWeight.bold,
-              ),
-              ),
-                  
-               //despliegue del menú
-              const Icon(Icons.keyboard_arrow_down_rounded),
+              children: [
+                // En este apartado del código se verá la parte de la dirección del usuario
+                Consumer<Restaurant>(
+                  builder: (context, restaurant, child) => Text(
+                    restaurant.deliveryAddress,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.inversePrimary,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                // Despliegue del menú
+                const Icon(Icons.keyboard_arrow_down_rounded),
               ],
             ),
           ),
